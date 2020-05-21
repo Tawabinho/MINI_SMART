@@ -1,0 +1,526 @@
+
+GccApplication2.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000002fa  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000034e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000034e  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000380  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000080  00000000  00000000  000003bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000c74  00000000  00000000  0000043c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000006d6  00000000  00000000  000010b0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000005c6  00000000  00000000  00001786  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000ac  00000000  00000000  00001d4c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000391  00000000  00000000  00001df8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000501  00000000  00000000  00002189  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000050  00000000  00000000  0000268a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 32 00 	jmp	0x64	; 0x64 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  54:	6d 00       	.word	0x006d	; ????
+  56:	87 00       	.word	0x0087	; ????
+  58:	a1 00       	.word	0x00a1	; ????
+  5a:	bb 00       	.word	0x00bb	; ????
+  5c:	d7 00       	.word	0x00d7	; ????
+  5e:	f1 00       	.word	0x00f1	; ????
+  60:	0b 01       	movw	r0, r22
+  62:	25 01       	movw	r4, r10
+
+00000064 <__ctors_end>:
+  64:	11 24       	eor	r1, r1
+  66:	1f be       	out	0x3f, r1	; 63
+  68:	cf e5       	ldi	r28, 0x5F	; 95
+  6a:	d8 e0       	ldi	r29, 0x08	; 8
+  6c:	de bf       	out	0x3e, r29	; 62
+  6e:	cd bf       	out	0x3d, r28	; 61
+  70:	0e 94 53 00 	call	0xa6	; 0xa6 <main>
+  74:	0c 94 7b 01 	jmp	0x2f6	; 0x2f6 <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <MOTOR_INT>:
+ *  Author: Ahmed EL-Tawab
+ */ 
+#include "DC_MOTOR.h"
+#include <avr/io.h>
+void MOTOR_INT(){
+	DDRD=0xFF;
+  7c:	8f ef       	ldi	r24, 0xFF	; 255
+  7e:	81 bb       	out	0x11, r24	; 17
+	TCCR2=(1<<WGM20)|(1<<WGM21)|(1<<COM20)|(1<<COM21)|(1<<CS20);
+  80:	89 e7       	ldi	r24, 0x79	; 121
+  82:	85 bd       	out	0x25, r24	; 37
+  84:	08 95       	ret
+
+00000086 <MOTOR_CW>:
+}
+void MOTOR_CW(uint_8__ speed){
+	set_bit__(PORTD,1);
+  86:	91 9a       	sbi	0x12, 1	; 18
+	clear_bit__(PORTD,2);
+  88:	92 98       	cbi	0x12, 2	; 18
+	OCR2=(speed*255)/100;
+  8a:	2f ef       	ldi	r18, 0xFF	; 255
+  8c:	82 9f       	mul	r24, r18
+  8e:	c0 01       	movw	r24, r0
+  90:	11 24       	eor	r1, r1
+  92:	64 e6       	ldi	r22, 0x64	; 100
+  94:	70 e0       	ldi	r23, 0x00	; 0
+  96:	0e 94 4d 01 	call	0x29a	; 0x29a <__divmodhi4>
+  9a:	63 bd       	out	0x23, r22	; 35
+  9c:	08 95       	ret
+
+0000009e <MOTOR_OFF>:
+}
+void MOTOR_OFF(){
+	clear_bit__(PORTD,1);
+  9e:	91 98       	cbi	0x12, 1	; 18
+	clear_bit__(PORTD,2);
+  a0:	92 98       	cbi	0x12, 2	; 18
+	OCR2=0;
+  a2:	13 bc       	out	0x23, r1	; 35
+  a4:	08 95       	ret
+
+000000a6 <main>:
+#include "SPI_SLAVE.h"
+
+int main(void)
+{
+    uint_8__ rec;
+    SPI_SLAVE_INT();
+  a6:	0e 94 40 01 	call	0x280	; 0x280 <SPI_SLAVE_INT>
+    MOTOR_INT();
+  aa:	0e 94 3e 00 	call	0x7c	; 0x7c <MOTOR_INT>
+				_delay_ms(100);
+				SPI_SLAVE_SEND('G');
+				_delay_ms(200);
+				break;
+			case '8':
+				toggle_bit__(PORTD,3);
+  ae:	c8 e0       	ldi	r28, 0x08	; 8
+    uint_8__ rec;
+    SPI_SLAVE_INT();
+    MOTOR_INT();
+    while (1) 
+    {
+		rec=SPI_SLAVE_RECIEVE();
+  b0:	0e 94 49 01 	call	0x292	; 0x292 <SPI_SLAVE_RECIEVE>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  b4:	2f ef       	ldi	r18, 0xFF	; 255
+  b6:	33 ec       	ldi	r19, 0xC3	; 195
+  b8:	99 e0       	ldi	r25, 0x09	; 9
+  ba:	21 50       	subi	r18, 0x01	; 1
+  bc:	30 40       	sbci	r19, 0x00	; 0
+  be:	90 40       	sbci	r25, 0x00	; 0
+  c0:	e1 f7       	brne	.-8      	; 0xba <main+0x14>
+  c2:	00 c0       	rjmp	.+0      	; 0xc4 <main+0x1e>
+  c4:	00 00       	nop
+		_delay_ms(200);
+		switch(rec){
+  c6:	90 e0       	ldi	r25, 0x00	; 0
+  c8:	fc 01       	movw	r30, r24
+  ca:	f1 97       	sbiw	r30, 0x31	; 49
+  cc:	e8 30       	cpi	r30, 0x08	; 8
+  ce:	f1 05       	cpc	r31, r1
+  d0:	78 f7       	brcc	.-34     	; 0xb0 <main+0xa>
+  d2:	e6 5d       	subi	r30, 0xD6	; 214
+  d4:	ff 4f       	sbci	r31, 0xFF	; 255
+  d6:	0c 94 61 01 	jmp	0x2c2	; 0x2c2 <__tablejump2__>
+			case '1':
+				toggle_bit__(PORTD,3);
+  da:	82 b3       	in	r24, 0x12	; 18
+  dc:	8c 27       	eor	r24, r28
+  de:	82 bb       	out	0x12, r24	; 18
+				set_bit__(PORTD,4);
+  e0:	94 9a       	sbi	0x12, 4	; 18
+  e2:	2f ef       	ldi	r18, 0xFF	; 255
+  e4:	31 ee       	ldi	r19, 0xE1	; 225
+  e6:	84 e0       	ldi	r24, 0x04	; 4
+  e8:	21 50       	subi	r18, 0x01	; 1
+  ea:	30 40       	sbci	r19, 0x00	; 0
+  ec:	80 40       	sbci	r24, 0x00	; 0
+  ee:	e1 f7       	brne	.-8      	; 0xe8 <main+0x42>
+  f0:	00 c0       	rjmp	.+0      	; 0xf2 <main+0x4c>
+  f2:	00 00       	nop
+				_delay_ms(100);
+				SPI_SLAVE_SEND('A');
+  f4:	81 e4       	ldi	r24, 0x41	; 65
+  f6:	0e 94 45 01 	call	0x28a	; 0x28a <SPI_SLAVE_SEND>
+  fa:	9f ef       	ldi	r25, 0xFF	; 255
+  fc:	23 ec       	ldi	r18, 0xC3	; 195
+  fe:	39 e0       	ldi	r19, 0x09	; 9
+ 100:	91 50       	subi	r25, 0x01	; 1
+ 102:	20 40       	sbci	r18, 0x00	; 0
+ 104:	30 40       	sbci	r19, 0x00	; 0
+ 106:	e1 f7       	brne	.-8      	; 0x100 <main+0x5a>
+ 108:	00 c0       	rjmp	.+0      	; 0x10a <main+0x64>
+ 10a:	00 00       	nop
+ 10c:	d1 cf       	rjmp	.-94     	; 0xb0 <main+0xa>
+				_delay_ms(200);
+				break;
+			case '2':
+				toggle_bit__(PORTD,3);
+ 10e:	82 b3       	in	r24, 0x12	; 18
+ 110:	8c 27       	eor	r24, r28
+ 112:	82 bb       	out	0x12, r24	; 18
+				set_bit__(PORTD,5);
+ 114:	95 9a       	sbi	0x12, 5	; 18
+ 116:	8f ef       	ldi	r24, 0xFF	; 255
+ 118:	91 ee       	ldi	r25, 0xE1	; 225
+ 11a:	24 e0       	ldi	r18, 0x04	; 4
+ 11c:	81 50       	subi	r24, 0x01	; 1
+ 11e:	90 40       	sbci	r25, 0x00	; 0
+ 120:	20 40       	sbci	r18, 0x00	; 0
+ 122:	e1 f7       	brne	.-8      	; 0x11c <main+0x76>
+ 124:	00 c0       	rjmp	.+0      	; 0x126 <main+0x80>
+ 126:	00 00       	nop
+				_delay_ms(100);
+				SPI_SLAVE_SEND('B');
+ 128:	82 e4       	ldi	r24, 0x42	; 66
+ 12a:	0e 94 45 01 	call	0x28a	; 0x28a <SPI_SLAVE_SEND>
+ 12e:	3f ef       	ldi	r19, 0xFF	; 255
+ 130:	83 ec       	ldi	r24, 0xC3	; 195
+ 132:	99 e0       	ldi	r25, 0x09	; 9
+ 134:	31 50       	subi	r19, 0x01	; 1
+ 136:	80 40       	sbci	r24, 0x00	; 0
+ 138:	90 40       	sbci	r25, 0x00	; 0
+ 13a:	e1 f7       	brne	.-8      	; 0x134 <main+0x8e>
+ 13c:	00 c0       	rjmp	.+0      	; 0x13e <main+0x98>
+ 13e:	00 00       	nop
+ 140:	b7 cf       	rjmp	.-146    	; 0xb0 <main+0xa>
+				_delay_ms(200);
+				break;
+			case '3':
+				toggle_bit__(PORTD,3);
+ 142:	82 b3       	in	r24, 0x12	; 18
+ 144:	8c 27       	eor	r24, r28
+ 146:	82 bb       	out	0x12, r24	; 18
+				set_bit__(PORTD,6);
+ 148:	96 9a       	sbi	0x12, 6	; 18
+ 14a:	2f ef       	ldi	r18, 0xFF	; 255
+ 14c:	31 ee       	ldi	r19, 0xE1	; 225
+ 14e:	84 e0       	ldi	r24, 0x04	; 4
+ 150:	21 50       	subi	r18, 0x01	; 1
+ 152:	30 40       	sbci	r19, 0x00	; 0
+ 154:	80 40       	sbci	r24, 0x00	; 0
+ 156:	e1 f7       	brne	.-8      	; 0x150 <main+0xaa>
+ 158:	00 c0       	rjmp	.+0      	; 0x15a <main+0xb4>
+ 15a:	00 00       	nop
+				_delay_ms(100);
+				SPI_SLAVE_SEND('C');
+ 15c:	83 e4       	ldi	r24, 0x43	; 67
+ 15e:	0e 94 45 01 	call	0x28a	; 0x28a <SPI_SLAVE_SEND>
+ 162:	9f ef       	ldi	r25, 0xFF	; 255
+ 164:	23 ec       	ldi	r18, 0xC3	; 195
+ 166:	39 e0       	ldi	r19, 0x09	; 9
+ 168:	91 50       	subi	r25, 0x01	; 1
+ 16a:	20 40       	sbci	r18, 0x00	; 0
+ 16c:	30 40       	sbci	r19, 0x00	; 0
+ 16e:	e1 f7       	brne	.-8      	; 0x168 <main+0xc2>
+ 170:	00 c0       	rjmp	.+0      	; 0x172 <main+0xcc>
+ 172:	00 00       	nop
+ 174:	9d cf       	rjmp	.-198    	; 0xb0 <main+0xa>
+				_delay_ms(200);
+				break;
+			case '4':
+				toggle_bit__(PORTD,3);
+ 176:	82 b3       	in	r24, 0x12	; 18
+ 178:	8c 27       	eor	r24, r28
+ 17a:	82 bb       	out	0x12, r24	; 18
+				MOTOR_CW(80);
+ 17c:	80 e5       	ldi	r24, 0x50	; 80
+ 17e:	0e 94 43 00 	call	0x86	; 0x86 <MOTOR_CW>
+ 182:	8f ef       	ldi	r24, 0xFF	; 255
+ 184:	91 ee       	ldi	r25, 0xE1	; 225
+ 186:	24 e0       	ldi	r18, 0x04	; 4
+ 188:	81 50       	subi	r24, 0x01	; 1
+ 18a:	90 40       	sbci	r25, 0x00	; 0
+ 18c:	20 40       	sbci	r18, 0x00	; 0
+ 18e:	e1 f7       	brne	.-8      	; 0x188 <main+0xe2>
+ 190:	00 c0       	rjmp	.+0      	; 0x192 <main+0xec>
+ 192:	00 00       	nop
+				_delay_ms(100);
+				SPI_SLAVE_SEND('M');
+ 194:	8d e4       	ldi	r24, 0x4D	; 77
+ 196:	0e 94 45 01 	call	0x28a	; 0x28a <SPI_SLAVE_SEND>
+ 19a:	3f ef       	ldi	r19, 0xFF	; 255
+ 19c:	83 ec       	ldi	r24, 0xC3	; 195
+ 19e:	99 e0       	ldi	r25, 0x09	; 9
+ 1a0:	31 50       	subi	r19, 0x01	; 1
+ 1a2:	80 40       	sbci	r24, 0x00	; 0
+ 1a4:	90 40       	sbci	r25, 0x00	; 0
+ 1a6:	e1 f7       	brne	.-8      	; 0x1a0 <main+0xfa>
+ 1a8:	00 c0       	rjmp	.+0      	; 0x1aa <main+0x104>
+ 1aa:	00 00       	nop
+ 1ac:	81 cf       	rjmp	.-254    	; 0xb0 <main+0xa>
+				_delay_ms(200);
+				break;
+			case '5':
+				toggle_bit__(PORTD,3);
+ 1ae:	82 b3       	in	r24, 0x12	; 18
+ 1b0:	8c 27       	eor	r24, r28
+ 1b2:	82 bb       	out	0x12, r24	; 18
+				clear_bit__(PORTD,4);
+ 1b4:	94 98       	cbi	0x12, 4	; 18
+ 1b6:	2f ef       	ldi	r18, 0xFF	; 255
+ 1b8:	31 ee       	ldi	r19, 0xE1	; 225
+ 1ba:	84 e0       	ldi	r24, 0x04	; 4
+ 1bc:	21 50       	subi	r18, 0x01	; 1
+ 1be:	30 40       	sbci	r19, 0x00	; 0
+ 1c0:	80 40       	sbci	r24, 0x00	; 0
+ 1c2:	e1 f7       	brne	.-8      	; 0x1bc <main+0x116>
+ 1c4:	00 c0       	rjmp	.+0      	; 0x1c6 <main+0x120>
+ 1c6:	00 00       	nop
+				_delay_ms(100);
+				SPI_SLAVE_SEND('E');
+ 1c8:	85 e4       	ldi	r24, 0x45	; 69
+ 1ca:	0e 94 45 01 	call	0x28a	; 0x28a <SPI_SLAVE_SEND>
+ 1ce:	9f ef       	ldi	r25, 0xFF	; 255
+ 1d0:	23 ec       	ldi	r18, 0xC3	; 195
+ 1d2:	39 e0       	ldi	r19, 0x09	; 9
+ 1d4:	91 50       	subi	r25, 0x01	; 1
+ 1d6:	20 40       	sbci	r18, 0x00	; 0
+ 1d8:	30 40       	sbci	r19, 0x00	; 0
+ 1da:	e1 f7       	brne	.-8      	; 0x1d4 <main+0x12e>
+ 1dc:	00 c0       	rjmp	.+0      	; 0x1de <main+0x138>
+ 1de:	00 00       	nop
+ 1e0:	67 cf       	rjmp	.-306    	; 0xb0 <main+0xa>
+				_delay_ms(200);
+				break;
+			case '6':
+				toggle_bit__(PORTD,3);
+ 1e2:	82 b3       	in	r24, 0x12	; 18
+ 1e4:	8c 27       	eor	r24, r28
+ 1e6:	82 bb       	out	0x12, r24	; 18
+				clear_bit__(PORTD,5);
+ 1e8:	95 98       	cbi	0x12, 5	; 18
+ 1ea:	8f ef       	ldi	r24, 0xFF	; 255
+ 1ec:	91 ee       	ldi	r25, 0xE1	; 225
+ 1ee:	24 e0       	ldi	r18, 0x04	; 4
+ 1f0:	81 50       	subi	r24, 0x01	; 1
+ 1f2:	90 40       	sbci	r25, 0x00	; 0
+ 1f4:	20 40       	sbci	r18, 0x00	; 0
+ 1f6:	e1 f7       	brne	.-8      	; 0x1f0 <main+0x14a>
+ 1f8:	00 c0       	rjmp	.+0      	; 0x1fa <main+0x154>
+ 1fa:	00 00       	nop
+				_delay_ms(100);
+				SPI_SLAVE_SEND('F');
+ 1fc:	86 e4       	ldi	r24, 0x46	; 70
+ 1fe:	0e 94 45 01 	call	0x28a	; 0x28a <SPI_SLAVE_SEND>
+ 202:	3f ef       	ldi	r19, 0xFF	; 255
+ 204:	83 ec       	ldi	r24, 0xC3	; 195
+ 206:	99 e0       	ldi	r25, 0x09	; 9
+ 208:	31 50       	subi	r19, 0x01	; 1
+ 20a:	80 40       	sbci	r24, 0x00	; 0
+ 20c:	90 40       	sbci	r25, 0x00	; 0
+ 20e:	e1 f7       	brne	.-8      	; 0x208 <main+0x162>
+ 210:	00 c0       	rjmp	.+0      	; 0x212 <main+0x16c>
+ 212:	00 00       	nop
+ 214:	4d cf       	rjmp	.-358    	; 0xb0 <main+0xa>
+				_delay_ms(200);
+				break;
+			case '7':
+				toggle_bit__(PORTD,3);
+ 216:	82 b3       	in	r24, 0x12	; 18
+ 218:	8c 27       	eor	r24, r28
+ 21a:	82 bb       	out	0x12, r24	; 18
+				clear_bit__(PORTD,6);
+ 21c:	96 98       	cbi	0x12, 6	; 18
+ 21e:	2f ef       	ldi	r18, 0xFF	; 255
+ 220:	31 ee       	ldi	r19, 0xE1	; 225
+ 222:	84 e0       	ldi	r24, 0x04	; 4
+ 224:	21 50       	subi	r18, 0x01	; 1
+ 226:	30 40       	sbci	r19, 0x00	; 0
+ 228:	80 40       	sbci	r24, 0x00	; 0
+ 22a:	e1 f7       	brne	.-8      	; 0x224 <main+0x17e>
+ 22c:	00 c0       	rjmp	.+0      	; 0x22e <main+0x188>
+ 22e:	00 00       	nop
+				_delay_ms(100);
+				SPI_SLAVE_SEND('G');
+ 230:	87 e4       	ldi	r24, 0x47	; 71
+ 232:	0e 94 45 01 	call	0x28a	; 0x28a <SPI_SLAVE_SEND>
+ 236:	9f ef       	ldi	r25, 0xFF	; 255
+ 238:	23 ec       	ldi	r18, 0xC3	; 195
+ 23a:	39 e0       	ldi	r19, 0x09	; 9
+ 23c:	91 50       	subi	r25, 0x01	; 1
+ 23e:	20 40       	sbci	r18, 0x00	; 0
+ 240:	30 40       	sbci	r19, 0x00	; 0
+ 242:	e1 f7       	brne	.-8      	; 0x23c <main+0x196>
+ 244:	00 c0       	rjmp	.+0      	; 0x246 <main+0x1a0>
+ 246:	00 00       	nop
+ 248:	33 cf       	rjmp	.-410    	; 0xb0 <main+0xa>
+				_delay_ms(200);
+				break;
+			case '8':
+				toggle_bit__(PORTD,3);
+ 24a:	82 b3       	in	r24, 0x12	; 18
+ 24c:	8c 27       	eor	r24, r28
+ 24e:	82 bb       	out	0x12, r24	; 18
+				MOTOR_OFF();
+ 250:	0e 94 4f 00 	call	0x9e	; 0x9e <MOTOR_OFF>
+ 254:	8f ef       	ldi	r24, 0xFF	; 255
+ 256:	91 ee       	ldi	r25, 0xE1	; 225
+ 258:	24 e0       	ldi	r18, 0x04	; 4
+ 25a:	81 50       	subi	r24, 0x01	; 1
+ 25c:	90 40       	sbci	r25, 0x00	; 0
+ 25e:	20 40       	sbci	r18, 0x00	; 0
+ 260:	e1 f7       	brne	.-8      	; 0x25a <main+0x1b4>
+ 262:	00 c0       	rjmp	.+0      	; 0x264 <main+0x1be>
+ 264:	00 00       	nop
+				_delay_ms(100);
+				SPI_SLAVE_SEND('H');
+ 266:	88 e4       	ldi	r24, 0x48	; 72
+ 268:	0e 94 45 01 	call	0x28a	; 0x28a <SPI_SLAVE_SEND>
+ 26c:	3f ef       	ldi	r19, 0xFF	; 255
+ 26e:	83 ec       	ldi	r24, 0xC3	; 195
+ 270:	99 e0       	ldi	r25, 0x09	; 9
+ 272:	31 50       	subi	r19, 0x01	; 1
+ 274:	80 40       	sbci	r24, 0x00	; 0
+ 276:	90 40       	sbci	r25, 0x00	; 0
+ 278:	e1 f7       	brne	.-8      	; 0x272 <main+0x1cc>
+ 27a:	00 c0       	rjmp	.+0      	; 0x27c <main+0x1d6>
+ 27c:	00 00       	nop
+ 27e:	18 cf       	rjmp	.-464    	; 0xb0 <main+0xa>
+
+00000280 <SPI_SLAVE_INT>:
+ *  Author: Ahmed EL-Tawab
+ */ 
+#include "SPI_SLAVE.h"
+#include <avr/io.h>
+void SPI_SLAVE_INT(){
+	set_bit__(DDRB,MISO);
+ 280:	be 9a       	sbi	0x17, 6	; 23
+	clear_bit__(DDRB,SS);
+ 282:	bc 98       	cbi	0x17, 4	; 23
+	SPCR=(1<<SPE);
+ 284:	80 e4       	ldi	r24, 0x40	; 64
+ 286:	8d b9       	out	0x0d, r24	; 13
+ 288:	08 95       	ret
+
+0000028a <SPI_SLAVE_SEND>:
+}
+void SPI_SLAVE_SEND(uint_8__ data){
+	SPDR=data;
+ 28a:	8f b9       	out	0x0f, r24	; 15
+	while((get_bit__(SPSR,SPIF))==0);
+ 28c:	77 9b       	sbis	0x0e, 7	; 14
+ 28e:	fe cf       	rjmp	.-4      	; 0x28c <SPI_SLAVE_SEND+0x2>
+}
+ 290:	08 95       	ret
+
+00000292 <SPI_SLAVE_RECIEVE>:
+uint_8__ SPI_SLAVE_RECIEVE(){
+	while((get_bit__(SPSR,SPIF))==0);
+ 292:	77 9b       	sbis	0x0e, 7	; 14
+ 294:	fe cf       	rjmp	.-4      	; 0x292 <SPI_SLAVE_RECIEVE>
+	return SPDR;
+ 296:	8f b1       	in	r24, 0x0f	; 15
+ 298:	08 95       	ret
+
+0000029a <__divmodhi4>:
+ 29a:	97 fb       	bst	r25, 7
+ 29c:	07 2e       	mov	r0, r23
+ 29e:	16 f4       	brtc	.+4      	; 0x2a4 <__divmodhi4+0xa>
+ 2a0:	00 94       	com	r0
+ 2a2:	07 d0       	rcall	.+14     	; 0x2b2 <__divmodhi4_neg1>
+ 2a4:	77 fd       	sbrc	r23, 7
+ 2a6:	09 d0       	rcall	.+18     	; 0x2ba <__divmodhi4_neg2>
+ 2a8:	0e 94 67 01 	call	0x2ce	; 0x2ce <__udivmodhi4>
+ 2ac:	07 fc       	sbrc	r0, 7
+ 2ae:	05 d0       	rcall	.+10     	; 0x2ba <__divmodhi4_neg2>
+ 2b0:	3e f4       	brtc	.+14     	; 0x2c0 <__divmodhi4_exit>
+
+000002b2 <__divmodhi4_neg1>:
+ 2b2:	90 95       	com	r25
+ 2b4:	81 95       	neg	r24
+ 2b6:	9f 4f       	sbci	r25, 0xFF	; 255
+ 2b8:	08 95       	ret
+
+000002ba <__divmodhi4_neg2>:
+ 2ba:	70 95       	com	r23
+ 2bc:	61 95       	neg	r22
+ 2be:	7f 4f       	sbci	r23, 0xFF	; 255
+
+000002c0 <__divmodhi4_exit>:
+ 2c0:	08 95       	ret
+
+000002c2 <__tablejump2__>:
+ 2c2:	ee 0f       	add	r30, r30
+ 2c4:	ff 1f       	adc	r31, r31
+ 2c6:	05 90       	lpm	r0, Z+
+ 2c8:	f4 91       	lpm	r31, Z
+ 2ca:	e0 2d       	mov	r30, r0
+ 2cc:	09 94       	ijmp
+
+000002ce <__udivmodhi4>:
+ 2ce:	aa 1b       	sub	r26, r26
+ 2d0:	bb 1b       	sub	r27, r27
+ 2d2:	51 e1       	ldi	r21, 0x11	; 17
+ 2d4:	07 c0       	rjmp	.+14     	; 0x2e4 <__udivmodhi4_ep>
+
+000002d6 <__udivmodhi4_loop>:
+ 2d6:	aa 1f       	adc	r26, r26
+ 2d8:	bb 1f       	adc	r27, r27
+ 2da:	a6 17       	cp	r26, r22
+ 2dc:	b7 07       	cpc	r27, r23
+ 2de:	10 f0       	brcs	.+4      	; 0x2e4 <__udivmodhi4_ep>
+ 2e0:	a6 1b       	sub	r26, r22
+ 2e2:	b7 0b       	sbc	r27, r23
+
+000002e4 <__udivmodhi4_ep>:
+ 2e4:	88 1f       	adc	r24, r24
+ 2e6:	99 1f       	adc	r25, r25
+ 2e8:	5a 95       	dec	r21
+ 2ea:	a9 f7       	brne	.-22     	; 0x2d6 <__udivmodhi4_loop>
+ 2ec:	80 95       	com	r24
+ 2ee:	90 95       	com	r25
+ 2f0:	bc 01       	movw	r22, r24
+ 2f2:	cd 01       	movw	r24, r26
+ 2f4:	08 95       	ret
+
+000002f6 <_exit>:
+ 2f6:	f8 94       	cli
+
+000002f8 <__stop_program>:
+ 2f8:	ff cf       	rjmp	.-2      	; 0x2f8 <__stop_program>
